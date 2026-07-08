@@ -40,3 +40,6 @@ data/*.log
 
 # --- Node (if applicable) ---
 node_modules/
+
+# --- Patient data / PHI (NEVER commit — HIPAA) ---
+data/imports/

@@ -17,3 +17,12 @@
 - Created documentation system (`docs/` folder with routing index)
 - Installed `/commit` command for structured commits with auto-documentation
 - Added core Anthropic API key to `.env`
+
+### DataOS + Jane Sales Pipeline
+- Installed **DataOS** — SQLite warehouse (`data/data.db`), collection framework, metrics generator
+- Built **Jane sales collector** — ingests Jane XLSX/CSV exports (6,701 line items, May 2024–present) into `jane_sales`
+- Added weekly + monthly sales overview (WoW/MoM, trailing 6 months, top services) to `key-metrics.md`
+- Wired `/prime` + `CLAUDE.md` to be data-aware; added `reference/data-access.md`
+- Set up daily launchd collection job (`com.aios.data-collect`, 6 AM)
+- PHI safeguard: `data/imports/` + database gitignored (patient data stays local)
+- **Next:** monthly patient follow-up email/text generator (phase 2); Instagram/Meta connector
