@@ -87,13 +87,26 @@ These are how you know your AIOS is working:
 │   ├── business-info.md     # What the business does
 │   ├── personal-info.md     # Who you are, your role
 │   ├── strategy.md          # Current priorities and goals
-│   ├── current-data.md      # Key metrics and current state
+│   ├── current-data.md      # Key metrics and current state (qualitative notes)
+│   ├── group/
+│   │   └── key-metrics.md   # Auto-generated current metrics from the DB (DataOS)
 │   └── import/              # Drop documents here for Claude to analyze
+├── data/                    # SQLite data warehouse (DataOS)
+│   └── data.db              # All business metrics, daily snapshots
+├── credentials/             # Service-account JSON files (gitignored, never commit)
 ├── module-installs/         # AIOS modules — drop module folders here, install with /install
 ├── plans/                   # Implementation plans created by /create-plan
 ├── outputs/                 # Work products and deliverables
 ├── reference/               # Templates, examples, reusable patterns
+│   └── data-access.md       # DB table schemas + SQL query examples (DataOS)
 ├── scripts/                 # Automation scripts (added by modules)
+│   ├── db.py                # Database framework (DataOS)
+│   ├── config.py            # Env/credential loader (DataOS)
+│   ├── collect.py           # Collection orchestrator — runs all collect_*.py (DataOS)
+│   ├── collect_*.py         # Individual data-source collectors (DataOS)
+│   ├── generate_metrics.py  # Regenerates key-metrics.md from the DB (DataOS)
+│   └── examples/            # Reference collectors to adapt (DataOS)
+├── config/                  # Scheduling configs (e.g. daily collection job)
 └── shares/                  # Packaged systems for sharing (created by /share)
 ```
 
@@ -110,6 +123,8 @@ These are how you know your AIOS is working:
 | `scripts/`         | Automation scripts — added by modules as you install them.                             |
 | `shares/`          | Packaged systems for sharing. Created by `/share`, ready to hand off.                  |
 | `docs/`            | Self-documenting system/integration docs (InfraOS). Indexed in `docs/_index.md`.       |
+| `data/`            | SQLite data warehouse (DataOS). Query `data/data.db` directly for analysis.             |
+| `credentials/`     | Google service-account JSON files (DataOS). Gitignored — never commit.                  |
 
 ---
 
@@ -157,6 +172,14 @@ Creates a clean, structured Git commit, checks whether any `docs/` need creating
 
 Example: `/commit` or `/commit feat: add competitor analysis command`
 
+### /update-data
+
+**Purpose:** Refresh the data warehouse on demand (DataOS).
+
+Runs `.venv/bin/python scripts/collect.py` to pull fresh numbers from all connected sources, then regenerates `context/group/key-metrics.md`. A daily job also does this automatically each morning, so you normally only run this when you want up-to-the-minute figures.
+
+Example: run `.venv/bin/python scripts/collect.py` (all sources) or `... collect.py --sources stripe` (one source)
+
 ### /share [system or feature]
 
 **Purpose:** Package a system or feature from your workspace for sharing.
@@ -164,6 +187,17 @@ Example: `/commit` or `/commit feat: add competitor analysis command`
 Deep-dives the code first to fully understand it, then produces a self-contained, beginner-friendly package with a Claude-guided installer (INSTALL.md + README.md + scripts). The recipient gives the folder to Claude Code and says "read INSTALL.md and set this up" — Claude walks them through everything step by step. Runs a 6-stage interactive flow: Research → Scope → Frame → Write → Validate → Deliver. Outputs to `shares/`.
 
 Example: `/share the daily brief system`
+
+---
+
+## Data (DataOS)
+
+This workspace has a local **SQLite data warehouse** at `data/data.db`. Business metrics are collected into it as daily snapshots by the collectors in `scripts/` (`collect_*.py`), orchestrated by `scripts/collect.py`.
+
+- **`context/group/key-metrics.md`** is auto-generated from the database and loaded by `/prime` every session — so Claude always knows the current numbers.
+- **For deeper analysis**, Claude can query `data/data.db` directly via Python's sqlite3 module (`sqlite3.connect("data/data.db")`). Load `reference/data-access.md` first for all table schemas and example SQL.
+- **Snapshot model:** most sources report current totals, so we store one row per day and compute changes by comparing dates. This is why daily collection matters.
+- **Graceful degradation:** a collector with missing credentials is skipped, never breaking the rest of the pipeline.
 
 ---
 
