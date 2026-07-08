@@ -105,6 +105,9 @@ These are how you know your AIOS is working:
 │   ├── collect.py           # Collection orchestrator — runs all collect_*.py (DataOS)
 │   ├── collect_*.py         # Individual data-source collectors (DataOS)
 │   ├── generate_metrics.py  # Regenerates key-metrics.md from the DB (DataOS)
+│   ├── gdrive.py            # Google Drive helper — read/write/export (Drive)
+│   ├── gdrive_auth.py       # One-time Google Drive OAuth authorization (Drive)
+│   ├── drive_cli.py         # Drive CLI — list/pull-docs/sheet/push/sync (Drive)
 │   └── examples/            # Reference collectors to adapt (DataOS)
 ├── config/                  # Scheduling configs (e.g. daily collection job)
 └── shares/                  # Packaged systems for sharing (created by /share)
@@ -179,6 +182,14 @@ Example: `/commit` or `/commit feat: add competitor analysis command`
 Runs `.venv/bin/python scripts/collect.py` to pull fresh numbers from all connected sources, then regenerates `context/group/key-metrics.md`. A daily job also does this automatically each morning, so you normally only run this when you want up-to-the-minute figures.
 
 Example: run `.venv/bin/python scripts/collect.py` (all sources) or `... collect.py --sources stripe` (one source)
+
+### /drive [request]
+
+**Purpose:** Work with the connected Google Drive in plain English (Drive integration).
+
+Reads business docs for context, pulls Google Sheet data to CSV, pushes generated reports to a Drive folder, or syncs a Drive folder locally — via `scripts/drive_cli.py`. Connected as `fitlabhawaii@gmail.com`; token in `credentials/` (gitignored).
+
+Example: `/drive pull the July memberships tab into a CSV` or `/drive push the latest sales overview to AIOS Reports`
 
 ### /share [system or feature]
 

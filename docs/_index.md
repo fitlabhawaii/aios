@@ -21,3 +21,4 @@
 | Condition | Doc | Summary |
 |-----------|-----|---------|
 | Working with Jane sales data, revenue metrics, or importing a Jane export | `docs/jane-sales-pipeline.md` | How Jane exports flow into `jane_sales` and power the sales overview |
+| Reading/writing Google Drive — docs, sheets, pushing reports, syncing folders | `docs/google-drive.md` | OAuth Drive connection + `drive_cli.py` operations |

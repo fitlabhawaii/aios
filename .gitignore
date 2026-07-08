@@ -43,3 +43,6 @@ node_modules/
 
 # --- Patient data / PHI (NEVER commit — HIPAA) ---
 data/imports/
+
+# --- Bulk Google Drive pulls (may contain sensitive business/patient docs) ---
+context/import/drive/

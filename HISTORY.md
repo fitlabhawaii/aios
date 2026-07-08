@@ -25,4 +25,11 @@
 - Wired `/prime` + `CLAUDE.md` to be data-aware; added `reference/data-access.md`
 - Set up daily launchd collection job (`com.aios.data-collect`, 6 AM)
 - PHI safeguard: `data/imports/` + database gitignored (patient data stays local)
-- **Next:** monthly patient follow-up email/text generator (phase 2); Instagram/Meta connector
+
+### Google Drive Integration
+- Connected Google Drive via OAuth Desktop client (`fitlabhawaii@gmail.com`) — full read/write
+- Built `scripts/gdrive.py` (helper), `gdrive_auth.py` (one-time auth), `drive_cli.py` (list/pull-docs/sheet/push/sync)
+- Added `/drive` command; documented in `docs/google-drive.md`
+- Verified: read membership/inventory sheets, created "AIOS Reports" Drive folder, pushed sales overview
+- Gitignored Drive credentials + `context/import/drive/` bulk pulls (may contain PHI)
+- **Next:** monthly patient follow-up email/text generator (phase 2); Instagram/Meta connector; optional membership/inventory sheet collectors
