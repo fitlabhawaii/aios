@@ -32,4 +32,11 @@
 - Added `/drive` command; documented in `docs/google-drive.md`
 - Verified: read membership/inventory sheets, created "AIOS Reports" Drive folder, pushed sales overview
 - Gitignored Drive credentials + `context/import/drive/` bulk pulls (may contain PHI)
-- **Next:** monthly patient follow-up email/text generator (phase 2); Instagram/Meta connector; optional membership/inventory sheet collectors
+
+### GoTo Connect (Phone Calls)
+- Connected GoTo Connect via OAuth (`fitlabhawaii@gmail.com`) — call history
+- Built `scripts/goto.py`, `goto_auth.py`, `collect_goto_calls.py` → `goto_calls` table (968 calls / 90 days)
+- Added "Phone Calls" section to `key-metrics.md` (weekly/monthly inbound/outbound/missed)
+- Documented in `docs/goto-calls.md`; account key `2666010478388802806`
+- Notes: GoTo API caps queries at ~31 days (chunked at 30); SMS not pullable (webhook-only); missed-call detection limited by summary API
+- **Next:** monthly patient follow-up email/text (phase 2); Canva connector; Squarespace→GA4+forms-to-Sheet; Instagram/Meta; optional membership/inventory sheet collectors

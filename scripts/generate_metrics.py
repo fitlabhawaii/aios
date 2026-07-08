@@ -186,6 +186,54 @@ def section_jane_sales(conn):
 #       return lines
 
 
+def _calls_between(conn, start, end):
+    """(total, inbound, outbound, missed_inbound) for calls in [start, end]."""
+    row = conn.execute(
+        "SELECT COUNT(*) t, "
+        "SUM(CASE WHEN direction='INBOUND' THEN 1 ELSE 0 END) inb, "
+        "SUM(CASE WHEN direction='OUTBOUND' THEN 1 ELSE 0 END) outb, "
+        "SUM(CASE WHEN missed=1 THEN 1 ELSE 0 END) missed "
+        "FROM goto_calls WHERE date >= ? AND date <= ?",
+        (start, end),
+    ).fetchone()
+    return (row["t"] or 0), (row["inb"] or 0), (row["outb"] or 0), (row["missed"] or 0)
+
+
+def section_goto_calls(conn):
+    """GoTo Connect phone-call volume — weekly + monthly, inbound/outbound/missed."""
+    if not table_exists(conn, "goto_calls"):
+        return []
+    today = datetime.now().date()
+    iso = "%Y-%m-%d"
+    tw_start = today - timedelta(days=today.weekday())
+    lw_start = tw_start - timedelta(days=7)
+    lw_end = tw_start - timedelta(days=1)
+    m_start = today.replace(day=1)
+    lm_end = m_start - timedelta(days=1)
+    lm_start = lm_end.replace(day=1)
+
+    rows = [
+        ("This week", tw_start, today),
+        ("Last week", lw_start, lw_end),
+        ("This month", m_start, today),
+        ("Last month", lm_start, lm_end),
+    ]
+    lines = [
+        "## Phone Calls (GoTo)",
+        "",
+        "| Window | Total | Inbound | Outbound | Missed |",
+        "|--------|-------|---------|----------|--------|",
+    ]
+    for label, s, e in rows:
+        t, inb, outb, missed = _calls_between(conn, s.strftime(iso), e.strftime(iso))
+        lines.append(f"| {label} | {t} | {inb} | {outb} | {missed} |")
+    lines.append("")
+    lines.append("> \"Missed\" reflects GoTo's outcome code (MISSED / abandoned / left-on-hold). "
+                 "Most inbound calls route through the dial plan and aren't flagged missed.")
+    lines.append("")
+    return lines
+
+
 # ============================================================
 # MAIN GENERATOR
 # ============================================================
@@ -193,6 +241,7 @@ def section_jane_sales(conn):
 # Register all section functions here. Claude adds new ones during install.
 SECTIONS = [
     section_jane_sales,
+    section_goto_calls,
     # section_instagram,   # added when Instagram/Meta is connected
 ]
 

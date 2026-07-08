@@ -33,7 +33,19 @@
 | RHA Filler | $1,414 | 2 |
 | VIP Membership | $1,250 | 6 |
 
+## Phone Calls (GoTo)
+
+| Window | Total | Inbound | Outbound | Missed |
+|--------|-------|---------|----------|--------|
+| This week | 56 | 19 | 37 | 0 |
+| Last week | 117 | 27 | 90 | 0 |
+| This month | 110 | 36 | 74 | 0 |
+| Last month | 376 | 129 | 247 | 2 |
+
+> "Missed" reflects GoTo's outcome code (MISSED / abandoned / left-on-hold). Most inbound calls route through the dial plan and aren't flagged missed.
+
 ## Data Freshness
 | Source | Latest Record | Status |
 |--------|---------------|--------|
+| goto_calls | 2026-07-08 | Connected |
 | jane_sales | 2026-07-08 | Connected |

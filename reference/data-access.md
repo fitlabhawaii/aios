@@ -20,6 +20,7 @@
 | Source | Table(s) | Collection Script | What It Tracks |
 |--------|----------|-------------------|----------------|
 | Jane App (sales) | `jane_sales` | `scripts/collect_jane.py` | Every sales line item — service/product, patient, staff, amounts, status |
+| GoTo Connect (calls) | `goto_calls` | `scripts/collect_goto_calls.py` | Call history — direction, answered/missed, caller, duration, outcome |
 | _(Instagram/Meta added when connected)_ | | | |
 
 ## Table Schemas
@@ -55,6 +56,28 @@ Notes:
 - Use **`collected`** for revenue (actual cash). `total` is gross invoiced.
 - `no_charge` rows (bundled follow-ups/consults) have `collected = 0` — they don't inflate revenue but do count as visits.
 - Negative `total`/`collected` = refunds.
+
+### `goto_calls`
+One row per call from GoTo Connect's call-events report. PK `call_id` (conversationSpaceId).
+Idempotent — the collector pulls a trailing 90-day window in 30-day chunks each run.
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `call_id` | TEXT | Unique call id (PK) |
+| `date` | TEXT | Call day (YYYY-MM-DD) — use for grouping/trends |
+| `direction` | TEXT | `INBOUND` or `OUTBOUND` |
+| `answered` | INTEGER | 1 if a leg answered (note: the dial plan auto-answers most inbound) |
+| `missed` | INTEGER | 1 if inbound & GoTo outcome is MISSED/abandoned/left-on-hold |
+| `call_created` / `call_answered` / `call_ended` | TEXT | Timestamps |
+| `duration_sec` / `talk_sec` | INTEGER | Total length / answered-to-end |
+| `caller_name` / `caller_number` | TEXT | Who called (**patient contact data — local only**) |
+| `outcome` | TEXT | GoTo callerOutcome (e.g. `LEFT_DIAL_PLAN`, `MISSED`) |
+| `handled_by` | TEXT | First participant (line/user) name |
+| `raw` | TEXT | Full JSON summary |
+
+Note: most inbound calls show `outcome = LEFT_DIAL_PLAN` (routed through the phone system).
+GoTo's summary API only explicitly flags `MISSED` — deeper missed-call analysis would need
+the detailed Call Events API.
 
 ### `collection_log`
 Tracks every collection run: `collected_at`, `source`, `status` (success/skipped/error), `reason`, `records_written`.

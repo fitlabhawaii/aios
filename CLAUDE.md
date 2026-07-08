@@ -108,6 +108,8 @@ These are how you know your AIOS is working:
 │   ├── gdrive.py            # Google Drive helper — read/write/export (Drive)
 │   ├── gdrive_auth.py       # One-time Google Drive OAuth authorization (Drive)
 │   ├── drive_cli.py         # Drive CLI — list/pull-docs/sheet/push/sync (Drive)
+│   ├── goto.py              # GoTo Connect helper — OAuth + call reports (GoTo)
+│   ├── goto_auth.py         # One-time GoTo OAuth authorization (GoTo)
 │   └── examples/            # Reference collectors to adapt (DataOS)
 ├── config/                  # Scheduling configs (e.g. daily collection job)
 └── shares/                  # Packaged systems for sharing (created by /share)

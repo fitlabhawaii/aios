@@ -6,7 +6,10 @@
       "Bash(git init *)",
       "Bash(git check-ignore *)",
       "Bash(git add *)",
-      "Bash(brew --version)"
+      "Bash(brew --version)",
+      "Bash(.venv/bin/python scripts/collect_goto_calls.py)",
+      "Bash(.venv/bin/python scripts/collect.py --sources goto_calls)",
+      "Bash(grep -iE \"token|\\\\.env$|credential|\\\\.db$\")"
     ]
   }
 }
