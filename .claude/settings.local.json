@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls -la /Users/fitlabhawaii/Downloads/ | grep -i context-os)",
+      "WebFetch(domain:www.fitlabhawaii.com)",
+      "Bash(git init *)",
+      "Bash(git check-ignore *)",
+      "Bash(git add *)"
+    ]
+  }
+}
