@@ -68,14 +68,21 @@ These are how you know your AIOS is working:
 ```
 .
 ├── CLAUDE.md                # This file — core context, always loaded
+├── HISTORY.md               # Living changelog — what was built each session (InfraOS)
 ├── .env                     # API keys and credentials (gitignored, never commit)
+├── .env.example             # Public template of required keys (safe to commit)
+├── .gitignore               # Protects secrets/data from being committed (InfraOS)
 ├── .claude/
 │   └── commands/            # Slash commands Claude can execute
 │       ├── prime.md         # /prime — session initialization
 │       ├── install.md       # /install — install an AIOS module
 │       ├── create-plan.md   # /create-plan — create implementation plans
 │       ├── implement.md     # /implement — execute plans
+│       ├── commit.md        # /commit — save work, update docs + changelog (InfraOS)
 │       └── share.md         # /share — package systems for sharing
+├── docs/                    # Self-documenting system/integration docs (InfraOS)
+│   ├── _index.md            # Routing index — find relevant docs here
+│   └── _templates/          # Templates for new system/integration docs
 ├── context/                 # Background context about the user and business
 │   ├── business-info.md     # What the business does
 │   ├── personal-info.md     # Who you are, your role
@@ -102,6 +109,7 @@ These are how you know your AIOS is working:
 | `reference/`       | Helpful docs, templates and patterns to assist in various workflows.                   |
 | `scripts/`         | Automation scripts — added by modules as you install them.                             |
 | `shares/`          | Packaged systems for sharing. Created by `/share`, ready to hand off.                  |
+| `docs/`            | Self-documenting system/integration docs (InfraOS). Indexed in `docs/_index.md`.       |
 
 ---
 
@@ -140,6 +148,14 @@ Example: `/create-plan add a competitor analysis command`
 Reads the plan, executes each step in order, validates the work, and updates the plan status.
 
 Example: `/implement plans/2026-01-28-competitor-analysis-command.md`
+
+### /commit [optional message]
+
+**Purpose:** Save your work to Git, update documentation, and keep the changelog current — in one command (InfraOS).
+
+Creates a clean, structured Git commit, checks whether any `docs/` need creating or updating, and appends an entry to `HISTORY.md`. Run this at the end of a work session or after completing meaningful work, then push to back up to GitHub.
+
+Example: `/commit` or `/commit feat: add competitor analysis command`
 
 ### /share [system or feature]
 

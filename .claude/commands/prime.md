@@ -6,6 +6,11 @@
 
 ./context
 
+Also read these workspace-memory files (added by InfraOS):
+
+- `HISTORY.md` — Workspace changelog (what was built, when, by whom)
+- `docs/_index.md` — Documentation routing index (find relevant system/integration docs here)
+
 ## Summary
 
 After reading, provide:

@@ -59,6 +59,23 @@ plan_path: $ARGUMENTS (path to the plan file, e.g., `plans/2026-01-28-add-guest-
 
 ---
 
+### Documentation Check
+
+After completing each implementation chunk:
+
+1. Check if the changes created a new system or significantly modified an existing one
+2. Read `docs/_index.md` — does a doc exist for this system?
+3. If no doc exists and the changes are significant (new system, new command, new integration):
+   - Create one using the template in `docs/_templates/`
+   - Add an entry to `docs/_index.md`
+4. If a doc exists but is now stale:
+   - Update the relevant sections
+   - Add a dated entry to the doc's History table
+5. Update `HISTORY.md` with what was implemented
+6. Commit the documentation updates: `docs: update documentation for {system}`
+
+---
+
 ### Phase 4: Update Plan Status
 
 After implementation, update the plan file:
