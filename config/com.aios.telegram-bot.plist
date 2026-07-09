@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.aios.telegram-bot</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/fitlabhawaii/AIOS/.venv/bin/python</string>
+        <string>/Users/fitlabhawaii/AIOS/scripts/telegram_bot.py</string>
+    </array>
+
+    <key>RunAtLoad</key>
+    <true/>
+
+    <key>KeepAlive</key>
+    <true/>
+
+    <key>ThrottleInterval</key>
+    <integer>10</integer>
+
+    <key>StandardOutPath</key>
+    <string>/Users/fitlabhawaii/AIOS/data/telegram-bot.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/fitlabhawaii/AIOS/data/telegram-bot.log</string>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/fitlabhawaii/AIOS</string>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/usr/local/bin:/usr/bin:/bin</string>
+    </dict>
+</dict>
+</plist>

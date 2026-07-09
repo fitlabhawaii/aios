@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.aios.telegram-brief</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/fitlabhawaii/AIOS/.venv/bin/python</string>
+        <string>/Users/fitlabhawaii/AIOS/scripts/telegram_brief.py</string>
+    </array>
+
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>6</integer>
+        <key>Minute</key>
+        <integer>15</integer>
+    </dict>
+
+    <key>StandardOutPath</key>
+    <string>/Users/fitlabhawaii/AIOS/data/telegram-brief.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/fitlabhawaii/AIOS/data/telegram-brief.log</string>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/fitlabhawaii/AIOS</string>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/usr/local/bin:/usr/bin:/bin</string>
+    </dict>
+</dict>
+</plist>
