@@ -46,3 +46,6 @@ data/imports/
 
 # --- Bulk Google Drive pulls (may contain sensitive business/patient docs) ---
 context/import/drive/
+
+# --- Canva design exports (regenerable; may contain sensitive design content) ---
+outputs/canva/

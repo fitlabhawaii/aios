@@ -9,7 +9,9 @@
       "Bash(brew --version)",
       "Bash(.venv/bin/python scripts/collect_goto_calls.py)",
       "Bash(.venv/bin/python scripts/collect.py --sources goto_calls)",
-      "Bash(grep -iE \"token|\\\\.env$|credential|\\\\.db$\")"
+      "Bash(grep -iE \"token|\\\\.env$|credential|\\\\.db$\")",
+      "WebSearch",
+      "Bash(python3 -c \"import time; time.sleep\\(3\\)\")"
     ]
   }
 }

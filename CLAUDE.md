@@ -110,6 +110,9 @@ These are how you know your AIOS is working:
 │   ├── drive_cli.py         # Drive CLI — list/pull-docs/sheet/push/sync (Drive)
 │   ├── goto.py              # GoTo Connect helper — OAuth + call reports (GoTo)
 │   ├── goto_auth.py         # One-time GoTo OAuth authorization (GoTo)
+│   ├── canva.py             # Canva Connect helper — OAuth(PKCE) + list/export (Canva)
+│   ├── canva_auth.py        # One-time Canva OAuth authorization (Canva)
+│   ├── canva_cli.py         # Canva CLI — list/export designs (Canva)
 │   └── examples/            # Reference collectors to adapt (DataOS)
 ├── config/                  # Scheduling configs (e.g. daily collection job)
 └── shares/                  # Packaged systems for sharing (created by /share)
@@ -192,6 +195,14 @@ Example: run `.venv/bin/python scripts/collect.py` (all sources) or `... collect
 Reads business docs for context, pulls Google Sheet data to CSV, pushes generated reports to a Drive folder, or syncs a Drive folder locally — via `scripts/drive_cli.py`. Connected as `fitlabhawaii@gmail.com`; token in `credentials/` (gitignored).
 
 Example: `/drive pull the July memberships tab into a CSV` or `/drive push the latest sales overview to AIOS Reports`
+
+### /canva [request]
+
+**Purpose:** Work with the connected Canva account (Canva integration).
+
+Lists and exports designs (PNG/PDF/etc. into `outputs/canva/`) via `scripts/canva_cli.py`. Autofill/brand templates require Canva Teams/Enterprise (account is on Pro).
+
+Example: `/canva export the spa services flyer as PDF`
 
 ### /share [system or feature]
 

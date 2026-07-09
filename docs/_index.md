@@ -23,3 +23,4 @@
 | Working with Jane sales data, revenue metrics, or importing a Jane export | `docs/jane-sales-pipeline.md` | How Jane exports flow into `jane_sales` and power the sales overview |
 | Reading/writing Google Drive — docs, sheets, pushing reports, syncing folders | `docs/google-drive.md` | OAuth Drive connection + `drive_cli.py` operations |
 | Working with phone call data, call volume, or GoTo Connect | `docs/goto-calls.md` | OAuth GoTo connection + call-history collector |
+| Listing or exporting Canva designs | `docs/canva.md` | OAuth Canva Connect API + `canva_cli.py` |

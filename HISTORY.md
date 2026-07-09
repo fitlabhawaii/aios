@@ -39,4 +39,11 @@
 - Added "Phone Calls" section to `key-metrics.md` (weekly/monthly inbound/outbound/missed)
 - Documented in `docs/goto-calls.md`; account key `2666010478388802806`
 - Notes: GoTo API caps queries at ~31 days (chunked at 30); SMS not pullable (webhook-only); missed-call detection limited by summary API
-- **Next:** monthly patient follow-up email/text (phase 2); Canva connector; Squarespace→GA4+forms-to-Sheet; Instagram/Meta; optional membership/inventory sheet collectors
+
+### Canva Connect API
+- Connected Canva via OAuth 2.0 + PKCE (Pro account, team `oBY1DBbGkZTo8kwbL6W7xg`)
+- Built `scripts/canva.py`, `canva_auth.py`, `canva_cli.py` + `/canva` command
+- Verified: list designs + export (Spa Services A4 → PNG). Documented in `docs/canva.md`
+- Limitation: autofill/brand templates need Teams/Enterprise (Pro has 0 brand templates)
+- Setup notes: Canva requires redirect `127.0.0.1` (not localhost) + account MFA to create integration
+- **Next:** monthly patient follow-up email/text (phase 2); Squarespace→GA4+forms-to-Sheet; Instagram/Meta; optional membership/inventory sheet collectors
