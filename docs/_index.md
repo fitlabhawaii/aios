@@ -24,3 +24,4 @@
 | Reading/writing Google Drive — docs, sheets, pushing reports, syncing folders | `docs/google-drive.md` | OAuth Drive connection + `drive_cli.py` operations |
 | Working with phone call data, call volume, or GoTo Connect | `docs/goto-calls.md` | OAuth GoTo connection + call-history collector |
 | Listing or exporting Canva designs | `docs/canva.md` | OAuth Canva Connect API + `canva_cli.py` |
+| Working on the Telegram bot, the mobile command center, or the daily brief | `docs/telegram-bot.md` | Telegram bot — /metrics, /brief, Claude Q&A, launchd always-on |

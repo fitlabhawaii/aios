@@ -122,6 +122,10 @@ These are how you know your AIOS is working:
 │   ├── canva.py             # Canva Connect helper — OAuth(PKCE) + list/export (Canva)
 │   ├── canva_auth.py        # One-time Canva OAuth authorization (Canva)
 │   ├── canva_cli.py         # Canva CLI — list/export designs (Canva)
+│   ├── telegram.py           # Telegram helpers + ask_claude with context (Telegram)
+│   ├── telegram_bot.py       # Interactive bot — long-poll loop (Telegram)
+│   ├── telegram_brief.py     # Send the morning brief to Telegram (Telegram)
+│   ├── telegram_setup.py     # One-time chat-id capture into .env (Telegram)
 │   └── examples/            # Reference collectors to adapt (DataOS)
 ├── config/                  # Scheduling configs (e.g. daily collection job)
 └── shares/                  # Packaged systems for sharing (created by /share)
@@ -142,6 +146,17 @@ These are how you know your AIOS is working:
 | `docs/`            | Self-documenting system/integration docs (InfraOS). Indexed in `docs/_index.md`.       |
 | `data/`            | SQLite data warehouse (DataOS). Query `data/data.db` directly for analysis.             |
 | `credentials/`     | Google service-account JSON files (DataOS). Gitignored — never commit.                  |
+
+---
+
+## Obsidian
+
+The **AIOS root folder is an Obsidian vault** — the config lives in `.obsidian/` at the workspace root, and the vault is registered in Obsidian as "AIOS" (`/Users/fitlabhawaii/AIOS`). This means every markdown note the AIOS produces (context, GTD, docs, outputs, plans) is a live Obsidian note — single source of truth, no syncing or duplication.
+
+- **`Home.md`** is the vault landing page — a dashboard of `[[wikilinks]]` to the key notes. Keep its links current when major files are added.
+- Use Obsidian-style `[[wikilinks]]` when cross-referencing notes so the graph and backlinks work.
+- **Excluded folders** (hidden from Obsidian to keep the vault clean, set in `.obsidian/app.json` → `userIgnoreFilters`): `.claude/`, `.venv/`, `scripts/`, `module-installs/`, `credentials/`, `data/`, `config/`, `node_modules/`, `.git/`, `shares/`. These still exist on disk — Claude uses them behind the scenes.
+- `.obsidian/workspace.json` (per-machine UI state) is gitignored; shared settings (`app.json`, `appearance.json`, etc.) are committed.
 
 ---
 
@@ -225,6 +240,22 @@ Lists and exports designs (PNG/PDF/etc. into `outputs/canva/`) via `scripts/canv
 
 Example: `/canva export the spa services flyer as PDF`
 
+### /brainstorm [topic]
+
+**Purpose:** Scan the workspace and find what to build or automate next (Slash Command Toolkit).
+
+Reads your tasks, processes, and current setup to surface manual work worth automating, ranks opportunities by impact × feasibility, deep-dives the top pick, and points you to `/explore` or `/implement`. Run without arguments to scan everything, or with a topic to focus on a specific area.
+
+Example: `/brainstorm` or `/brainstorm memberships`
+
+### /explore [idea]
+
+**Purpose:** Shape a rough idea into a clear, buildable concept (Slash Command Toolkit).
+
+Interactive 5-stage session — Discovery → Research → Shape → Scope → Output — that walks an idea into a scoped feature doc saved in `plans/` (`explore-YYYY-MM-DD-{name}.md`), ready to hand to `/create-plan` or `/implement`.
+
+Example: `/explore a daily summary of what I accomplished today`
+
 ### /share [system or feature]
 
 **Purpose:** Package a system or feature from your workspace for sharing.
@@ -243,6 +274,31 @@ This workspace has a local **SQLite data warehouse** at `data/data.db`. Business
 - **For deeper analysis**, Claude can query `data/data.db` directly via Python's sqlite3 module (`sqlite3.connect("data/data.db")`). Load `reference/data-access.md` first for all table schemas and example SQL.
 - **Snapshot model:** most sources report current totals, so we store one row per day and compute changes by comparing dates. This is why daily collection matters.
 - **Graceful degradation:** a collector with missing credentials is skipped, never breaking the rest of the pipeline.
+
+---
+
+## Telegram Bot (@fitlabhawaiibot)
+
+A phone-first command center. Long-polls Telegram and answers from the same
+business context `/prime` loads. Credentials live in `.env`
+(`TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`).
+
+- **`scripts/telegram_bot.py`** — the interactive bot. Commands: `/metrics`
+  (current numbers), `/brief` (on-demand morning summary), `/reset`, `/help`;
+  any other text is answered by Claude (`claude-opus-4-8`) with full context.
+- **`scripts/telegram_brief.py`** — composes the morning brief and sends it to
+  `TELEGRAM_CHAT_ID`. Run on demand or schedule it after the daily collection.
+- **`scripts/telegram_setup.py`** — one-time: message the bot, then run this to
+  capture your chat id into `.env`.
+- **`scripts/telegram.py`** — shared helpers (Telegram API + `ask_claude`).
+- **Security:** only `TELEGRAM_CHAT_ID` is served; other chats are refused.
+- **Always-on (launchd):** the bot runs as `com.aios.telegram-bot` (KeepAlive,
+  starts on login) and the brief as `com.aios.telegram-brief` (daily 6:15 AM,
+  after the 6 AM data collect). Plists live in `config/` and are installed to
+  `~/Library/LaunchAgents/`. Logs: `data/telegram-bot.log`,
+  `data/telegram-brief.log`.
+  - Restart the bot: `launchctl unload ~/Library/LaunchAgents/com.aios.telegram-bot.plist && launchctl load ~/Library/LaunchAgents/com.aios.telegram-bot.plist`
+  - Run the bot by hand instead: `.venv/bin/python scripts/telegram_bot.py`
 
 ---
 

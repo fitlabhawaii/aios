@@ -10,6 +10,15 @@
 
 ## 2026-07-08
 
+### Telegram Bot (@fitlabhawaiibot)
+- Built a phone-first command center: `scripts/telegram_bot.py` long-polls Telegram
+- `/metrics` returns current DataOS numbers; `/brief` sends an on-demand morning summary; free-form text is answered by Claude (`claude-opus-4-8`) with full business context
+- `scripts/telegram_brief.py` composes + pushes the morning brief to `TELEGRAM_CHAT_ID` (schedulable)
+- `scripts/telegram.py` shared helpers (Telegram API + `ask_claude`); `scripts/telegram_setup.py` captures the owner chat id into `.env`
+- Security: only the allowlisted `TELEGRAM_CHAT_ID` is served; installed `anthropic` SDK into `.venv`
+- Captured owner chat id (group "Fitlab Hawaii", `-5365651319`) via `telegram_setup.py`
+- Made it always-on: launchd jobs `com.aios.telegram-bot` (KeepAlive) + `com.aios.telegram-brief` (daily 6:15 AM); plists in `config/`, installed to `~/Library/LaunchAgents/`, logs in `data/`
+
 ### Initial Setup
 - Initialized AIOS workspace from the starter kit template
 - Installed **ContextOS** — scraped fitlabhawaii.com and built `context/business-info.md`
