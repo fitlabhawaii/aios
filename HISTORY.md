@@ -46,4 +46,10 @@
 - Verified: list designs + export (Spa Services A4 → PNG). Documented in `docs/canva.md`
 - Limitation: autofill/brand templates need Teams/Enterprise (Pro has 0 brand templates)
 - Setup notes: Canva requires redirect `127.0.0.1` (not localhost) + account MFA to create integration
-- **Next:** monthly patient follow-up email/text (phase 2); Squarespace→GA4+forms-to-Sheet; Instagram/Meta; optional membership/inventory sheet collectors
+
+### Context Enrichment + ProductivityOS
+- Read the Google Drive (243 files; pulled 47 business docs, skipped PHI/images) → rewrote all 4 context files (offerings, ops, economics, team, SOPs, unit economics)
+- Installed **ProductivityOS** (GTD) — `gtd/` files, `/process` + `/review` commands, dashboard refresh script
+- Tailored areas to FitLab: Clinical & Services, Marketing & Content, Memberships & Retention, Operations & Admin, Team & Hiring, Personal
+- Wired `gtd/dashboard.md` into `/prime`
+- **Next:** first brain-dump/`/process`; monthly patient follow-up (phase 2); Squarespace→GA4+forms-to-Sheet; Instagram/Meta; membership/inventory sheet collectors

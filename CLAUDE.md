@@ -83,6 +83,15 @@ These are how you know your AIOS is working:
 ├── docs/                    # Self-documenting system/integration docs (InfraOS)
 │   ├── _index.md            # Routing index — find relevant docs here
 │   └── _templates/          # Templates for new system/integration docs
+├── gtd/                     # Getting Things Done system (ProductivityOS)
+│   ├── dashboard.md         # Operational hub — loaded every session by /prime
+│   ├── inbox.md             # Capture bucket (process with /process)
+│   ├── projects.md          # Projects by area (Clinical, Marketing, Memberships…)
+│   ├── next-actions.md      # Actions by context (@me, @claude, @calls, @team…)
+│   ├── waiting-for.md       # Delegated / awaited items
+│   ├── someday-maybe.md     # Ideas for later
+│   ├── areas.md             # Areas of responsibility
+│   └── review-checklist.md  # Weekly review protocol + decision tree
 ├── context/                 # Background context about the user and business
 │   ├── business-info.md     # What the business does
 │   ├── personal-info.md     # Who you are, your role
@@ -195,6 +204,18 @@ Example: run `.venv/bin/python scripts/collect.py` (all sources) or `... collect
 Reads business docs for context, pulls Google Sheet data to CSV, pushes generated reports to a Drive folder, or syncs a Drive folder locally — via `scripts/drive_cli.py`. Connected as `fitlabhawaii@gmail.com`; token in `credentials/` (gitignored).
 
 Example: `/drive pull the July memberships tab into a CSV` or `/drive push the latest sales overview to AIOS Reports`
+
+### /process
+
+**Purpose:** Empty your GTD inbox to zero using the decision tree (ProductivityOS).
+
+Walks each `gtd/inbox.md` item through: actionable? → project? → next action → do (2-min rule) / delegate (waiting-for) / defer (next-actions by context) / someday / trash. Refreshes the dashboard after.
+
+### /review
+
+**Purpose:** Guided weekly GTD review (ProductivityOS).
+
+A 4-phase review — empty inbox, walk all lists, surface stuck projects, brainstorm — to keep the system trustworthy. Run weekly (Friday is the classic time).
 
 ### /canva [request]
 

@@ -12,7 +12,8 @@
       "Bash(grep -iE \"token|\\\\.env$|credential|\\\\.db$\")",
       "WebSearch",
       "Bash(python3 -c \"import time; time.sleep\\(3\\)\")",
-      "Bash(.venv/bin/python scripts/canva.py)"
+      "Bash(.venv/bin/python scripts/canva.py)",
+      "Bash(.venv/bin/python scripts/refresh_dashboard.py)"
     ]
   }
 }
