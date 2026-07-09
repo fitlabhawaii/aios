@@ -11,7 +11,8 @@
       "Bash(.venv/bin/python scripts/collect.py --sources goto_calls)",
       "Bash(grep -iE \"token|\\\\.env$|credential|\\\\.db$\")",
       "WebSearch",
-      "Bash(python3 -c \"import time; time.sleep\\(3\\)\")"
+      "Bash(python3 -c \"import time; time.sleep\\(3\\)\")",
+      "Bash(.venv/bin/python scripts/canva.py)"
     ]
   }
 }
