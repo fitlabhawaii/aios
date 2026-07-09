@@ -30,6 +30,10 @@ from config import get_env, WORKSPACE_ROOT  # noqa: E402
 TELEGRAM_API = "https://api.telegram.org/bot{token}/{method}"
 MAX_MESSAGE = 4000  # Telegram hard limit is 4096; leave headroom
 
+# Model for replies + the brief. Haiku 4.5 is the fastest Claude model — best
+# for snappy phone-chat responses. Swap to claude-opus-4-8 for max quality.
+MODEL = "claude-haiku-4-5"
+
 # Context files loaded into Claude's system prompt (same spirit as /prime).
 _CONTEXT_FILES = [
     "context/business-info.md",
@@ -162,7 +166,7 @@ def ask_claude(history, context=None):
 
     client = anthropic.Anthropic(api_key=api_key)
     resp = client.messages.create(
-        model="claude-opus-4-8",
+        model=MODEL,
         max_tokens=1024,
         system=[{"type": "text", "text": system,
                  "cache_control": {"type": "ephemeral"}}],
