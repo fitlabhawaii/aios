@@ -126,7 +126,7 @@ def main():
     print(summary, file=sys.stderr)
     print(summary)
 
-    # Post-collection: regenerate key metrics
+    # Post-collection: regenerate key metrics + the sales dashboard
     if successes > 0:
         try:
             from generate_metrics import main as regen
@@ -134,6 +134,12 @@ def main():
             print(f"[{timestamp}] Key metrics regenerated", file=sys.stderr)
         except Exception as e:
             print(f"[{timestamp}] Warning: metrics regen failed: {e}", file=sys.stderr)
+        try:
+            from generate_dashboard import main as regen_dash
+            regen_dash()
+            print(f"[{timestamp}] Sales dashboard regenerated", file=sys.stderr)
+        except Exception as e:
+            print(f"[{timestamp}] Warning: dashboard regen failed: {e}", file=sys.stderr)
 
     sys.exit(0 if successes > 0 else 1)
 
